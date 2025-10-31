@@ -13,7 +13,7 @@ def main(page: ft.Page):
     c_cupola_testo = ft.Text(f"coordinata Cupola: {c_cupola}", size=16)
     c_telescopio_testo = ft.Text(f"coordinata Telescopio: {c_telescopio}", size=16)
 
-
+    #funzioni dei pulsanti per aggiornare le coordinate e la pagina
     def sposta_c_destra(sposta: int):
         sposta_cupola_destra(sposta)
         c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
