@@ -8,6 +8,8 @@ def main(page: ft.Page):
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
+    page.dark_theme
+
 
     # Testi coordinate
     c_cupola_testo = ft.Text(f"coordinata Cupola: {c_cupola}", size=16)
@@ -75,15 +77,49 @@ def main(page: ft.Page):
         expand=False,
     )
 
+    log_list = ft.Column()
+
+    def show_list (e):
+        log_list.visible = not log_list.visible
+        page.update()
+
+    switch_show = ft.Switch(
+        thumb_icon=ft.Icons.LIST_OUTLINED,
+        value=True,
+        label="Log",
+        label_position=ft.LabelPosition.RIGHT,
+        on_change=show_list,
+    )
+
+    log_list.controls.append(
+            ft.Row(
+                [config.new_lista_log(page, "src/fileLog/spostamenti.log")],
+                expand=True,
+                vertical_alignment=ft.CrossAxisAlignment.START,
+            )
+        )
+    
 
     # Layout principale
     layout = ft.Column(
         [navbar, centro, footer],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
+        horizontal_alignment=ft.CrossAxisAlignment.START, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
     )
 
-    page.add(layout)
+    log_layout = ft.Row(
+        [log_list,switch_show],
+        expand=True,
+        vertical_alignment=ft.CrossAxisAlignment.START,
+    )
+
+    page.add(
+        ft.Row(
+            [log_layout,layout],
+            expand=True,
+            vertical_alignment=ft.CrossAxisAlignment.START,),
+        
+    )
 
 ft.app(main)
