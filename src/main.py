@@ -3,13 +3,14 @@ from config import *
 import config
 from seriale import start_ascolto
 
+
 def main(page: ft.Page):
 
     #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.theme_mode = ft.ThemeMode.DARK
+    page.theme_mode = tema
        
 
     start_ascolto()# avvio l'ascolto sulla porta seriale
