@@ -12,20 +12,20 @@ def sposta_cupola_destra(sposta: int): # funzione per spostare la cupola a destr
     global c_cupola
     if(sposta != 0): #aggiunto il controllo almeno non abbiamo spostamenti inutili nei file di log
         c_cupola = str(int(c_cupola) + sposta)
-        cupola_logger.info(f"Cupola spostata a destra di {sposta}. Nuova posizione: {c_cupola}")
+        cupola_logger.info(f"destra di {sposta}. pos: {c_cupola}")
 
 def sposta_cupola_sinistra(sposta: int): # funzione per spostare la cupola a sinistra
     global c_cupola
     if(sposta != 0):
         c_cupola = str(int(c_cupola) - sposta)
-        cupola_logger.info(f"Cupola spostata a sinistra di {sposta}. Nuova posizione: {c_cupola}")
+        cupola_logger.info(f"sinistra di: {sposta}. pos: {c_cupola}")
 
 def reset_posizioni(): # funzione per resettare le posizioni
     global c_cupola, c_telescopio
     c_cupola = c_telescopio
-    cupola_logger.info("Posizioni resettate")
+    cupola_logger.info("reset")
 def stop_movimento(): # funzione per fermare il movimento
-    cupola_logger.info("Movimento fermato")
+    cupola_logger.info("stop")
 
 
 #lista per i log
