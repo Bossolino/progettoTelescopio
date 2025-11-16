@@ -9,7 +9,8 @@ def main(page: ft.Page):
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.dark_theme
+    page.theme_mode = ft.ThemeMode.DARK
+       
 
     start_ascolto()# avvio l'ascolto sulla porta seriale
 
