@@ -58,6 +58,6 @@ def main(page: ft.Page):
         on_change=selezione,
     )
 
-    page.add(select)
+    page.add(select, contenuto)
 
 ft.app(main)

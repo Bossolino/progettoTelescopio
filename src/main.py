@@ -8,6 +8,10 @@ def main(page: ft.Page):
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
+    page.theme_mode = ft.ThemeMode.DARK
+       
+
+    start_ascolto()# avvio l'ascolto sulla porta seriale
 
     # Testi coordinate
     c_cupola_testo = ft.Text(f"coordinata Cupola: {c_cupola}", size=16)
