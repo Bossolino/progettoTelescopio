@@ -24,7 +24,8 @@ def main(page: ft.Page):
 
 
 
-    contenuto = ft.ListView(spacing=10, padding=20, width=300, auto_scroll=True)
+    contenuto = ft.ListView(spacing=10, padding=20, width=300, auto_scroll=True, expand=True)
+    
 
     def new_riga(riga : str):
         contenuto.controls.append(ft.Text(riga.strip(), color=ft.Colors.WHITE))
