@@ -1,6 +1,7 @@
 import flet as ft
 from config import *
 import config
+from seriale import start_ascolto
 
 def main(page: ft.Page):
 
@@ -10,6 +11,7 @@ def main(page: ft.Page):
     page.spacing = 20
     page.dark_theme
 
+    start_ascolto()# avvio l'ascolto sulla porta seriale
 
     # Testi coordinate
     c_cupola_testo = ft.Text(f"coordinata Cupola: {c_cupola}", size=16)
@@ -119,7 +121,6 @@ def main(page: ft.Page):
             [log_layout,layout],
             expand=True,
             vertical_alignment=ft.CrossAxisAlignment.START,),
-        
     )
 
 ft.app(main)

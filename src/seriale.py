@@ -14,6 +14,9 @@ def ascolto(porta:str):# funzione per ascoltare la porta
 
 def start_ascolto():# funzione per avviare l'ascolto
     global ascolta 
+    global porta_seriale
+    if porta_seriale == "":
+        return logger_seriale.error("Porta seriale non indicata!")
     if porta_seriale in getPorteDisponibili(): # controllo se la porta impostata è disponibile
         ascolta = True
         thread_ascolto.start() # se la porta è libera avvio il thread
