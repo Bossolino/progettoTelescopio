@@ -1,7 +1,7 @@
 import serial
 import serial.tools.list_ports
 import threading
-from fileLog.LogSeriale import logger_seriale
+from fileLog.Log import logger_seriale
 
 porta_seriale = "" #variabile in cui settare la porta
 ascolta = False #variabile per continuare ad ascoltare finchè vuole l'utente o il programma non termina
