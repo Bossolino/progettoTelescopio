@@ -30,3 +30,26 @@
 2025-11-14 23:15:18,536 - movimenti_cupola - INFO - Posizioni resettate
 2025-11-14 23:15:18,752 - movimenti_cupola - INFO - Posizioni resettate
 2025-11-14 23:15:19,711 - movimenti_cupola - INFO - Movimento fermato
+2025-11-16 19:23:17,832 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -1
+2025-11-16 19:23:19,003 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -2
+2025-11-16 19:23:19,981 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -3
+2025-11-16 19:23:20,156 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -4
+2025-11-16 19:23:20,456 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -5
+2025-11-16 19:23:26,782 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 95
+2025-11-16 19:23:26,969 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 195
+2025-11-16 19:23:27,097 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 295
+2025-11-16 19:23:27,349 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 395
+2025-11-16 19:23:27,499 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 495
+2025-11-16 19:23:27,624 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 595
+2025-11-16 19:23:27,796 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 695
+2025-11-16 19:23:27,938 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 795
+2025-11-16 19:23:28,080 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 895
+2025-11-16 19:23:28,351 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 995
+2025-11-16 19:23:28,515 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 1095
+2025-11-16 19:23:28,680 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 1195
+2025-11-16 19:23:28,850 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 1295
+2025-11-16 19:23:29,010 - movimenti_cupola - INFO - Cupola spostata a destra di 100. Nuova posizione: 1395
+2025-11-16 19:23:33,702 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: 1394
+2025-11-16 19:23:34,902 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: 1393
+2025-11-16 19:23:35,131 - movimenti_cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: 1392
+2025-11-16 19:23:59,845 - movimenti_cupola - INFO - Cupola spostata a sinistra di 150. Nuova posizione: -150

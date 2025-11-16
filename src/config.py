@@ -2,14 +2,8 @@ import logging
 from pathlib import Path
 import flet as ft
 import asyncio
+from fileLog.Log import cupola_logger 
 
-cupola_logger = logging.getLogger("movimenti_cupola") #nome del logger
-cupola_logger.setLevel(logging.INFO)
-
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s") #formato del logger
-fileHandler = logging.FileHandler("src\\fileLog\\spostamenti.log") #dove si trova il file di log
-fileHandler.setFormatter(formatter)
-cupola_logger.addHandler(fileHandler)
 
 c_cupola = "0"
 c_telescopio = "1"
