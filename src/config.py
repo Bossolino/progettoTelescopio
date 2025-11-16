@@ -31,7 +31,7 @@ def stop_movimento(): # funzione per fermare il movimento
 #lista per i log
 
 # creo la lista
-lista = ft.ListView(spacing=10, padding=20, width=150, auto_scroll=True)
+lista = ft.ListView(spacing=10, padding=20, width=300, auto_scroll=True)
 
 # Funzione per aggiungere nuove righe
 def new_riga(riga : str):
