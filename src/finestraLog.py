@@ -4,7 +4,7 @@ from config import tema
 
 
 
-def main(page: ft.Page):
+def finestraLog(page: ft.Page):
      #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
@@ -98,4 +98,4 @@ def main(page: ft.Page):
 
     page.add(layout, pulsante_clear)
 
-ft.app(main)
+ft.app(finestraLog)

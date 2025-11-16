@@ -1,5 +1,5 @@
-import serial
-import serial.tools.list_ports
+import serial # type: ignore
+import serial.tools.list_ports # type: ignore
 import threading
 from fileLog.Log import logger_seriale
 
