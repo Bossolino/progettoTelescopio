@@ -11,7 +11,7 @@ def main(page: ft.Page):
     page.spacing = 20
     page.theme_mode = tema
 
-    isClear = True
+    isClear = True #per abilitare il pulsante clear che tanto se abilita lo stesso
 
 
 
@@ -27,30 +27,31 @@ def main(page: ft.Page):
     def crea_opzioni(nomiFile): # creo le opzioni
         opzioni = []
         for i in nomiFile:
-            opzioni.append(ft.DropdownOption(key = i["path"], text=i["nome"]))
+            opzioni.append(ft.DropdownOption(key = i["path"], text=i["nome"])) # opzioni
         return opzioni
     
 
     
-
-    contenuto = ft.ListView(spacing=20, padding=20, auto_scroll=True, expand=True)
+    # contenuto del file
+    contenuto = ft.ListView(spacing=20, padding=20, auto_scroll=True, height=300, expand=True)
+    # funzione per eliminare cio che si vede a nel contenuto
     def clear():
         nonlocal isClear
         contenuto.controls.clear()
         isClear = not isClear
         print("fai schifo merda")
-        pulsante_clear.disabled = not isClear
+        pulsante_clear.disabled = not isClear # disabilito il pulsante in base allo stato della variabile
         page.update()
 
-    pulsante_clear = ft.ElevatedButton(
+    pulsante_clear = ft.ElevatedButton( # pulsante per eliminare
         text="clear",
         icon=ft.Icons.CLEAR,
-        on_click=lambda e: clear()
+        on_click=lambda e: clear() # richiamo la funzione clear () al click
     )
 
 
     def new_riga(riga : str):
-        contenuto.controls.append(ft.Text(riga.strip(), color=ft.Colors.WHITE))
+        contenuto.controls.append(ft.Text(riga.strip(), color=ft.Colors.WHITE)) # aggiungo le righe
 
 
     def carica_contenuto(nome_file):
@@ -77,7 +78,7 @@ def main(page: ft.Page):
         carica_contenuto(e.control.value)
         page.update()
 
-    select = ft.Dropdown(
+    select = ft.Dropdown(  # creazione select
         border=ft.InputBorder.UNDERLINE,
         enable_filter=True,
         editable=True,
