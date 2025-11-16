@@ -1,5 +1,6 @@
 import flet as ft
 from pathlib import Path
+from config import tema
 
 
 
@@ -8,7 +9,7 @@ def main(page: ft.Page):
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.dark_theme
+    page.theme_mode = tema
 
     isClear = True
 
