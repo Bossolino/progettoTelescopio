@@ -1,5 +1,15 @@
 import flet as ft
 from config import tema
+from seriale import porta_seriale
+import json
+
+def init_settings(): #print(data["application"]["tema"])
+    global tema
+    with open("src/assets/settings.json", "r") as f:
+        data = json.load(f)
+    tema = data["application"]["tema"]
+    porta_seriale = data["application"]["portaSeriale"]
+    
 
 def finestraSettings(page: ft.Page):
 
@@ -7,7 +17,8 @@ def finestraSettings(page: ft.Page):
     page.theme_mode = tema
 
     def init_setting():
-        dropdown.value = "ThemeMode.DARK"
+        dropdown.value = "DARK"
+        print(dropdown.value)
         dropdown.leading_icon=ft.Icons.DARK_MODE
         page.update()
 
