@@ -4,7 +4,8 @@ import flet as ft
 import asyncio
 from fileLog.Log import cupola_logger 
 
-tema = ft.ThemeMode.DARK
+
+tema = ft.ThemeMode.SYSTEM
 
 c_cupola = "0"
 c_telescopio = "1"
