@@ -3,10 +3,21 @@ from config import *
 import config
 from seriale import start_ascolto
 from flet_video import Video, VideoMedia
+import finestraLog
+import finestraSettings
 
 
 
 def main(page: ft.Page):
+
+    def mostra_log(page: ft.Page):
+        page.clean()
+        finestraLog.finestraLog(page)
+    def mostra_Setting(page: ft.Page):
+        page.clean()
+        finestraSettings.finestraSettings(page)
+    bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: mostra_log(page))
+    bSetting = ft.ElevatedButton(text="Mostra Setting", on_click=lambda e: mostra_Setting(page))
     # page.window.maximized = True
     page.window.width = 1920
     page.window.height = 1080
@@ -112,7 +123,7 @@ def main(page: ft.Page):
 
     # Layout principale
     layout = ft.Column(
-        [navbar, centro, footer],
+        [navbar, centro, footer, bLog, bSetting],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
         horizontal_alignment=ft.CrossAxisAlignment.START, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra

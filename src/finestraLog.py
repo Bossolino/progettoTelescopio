@@ -99,5 +99,4 @@ def finestraLog(page: ft.Page):
     )
 
     page.add(layout, pulsante_clear)
-
-ft.app(finestraLog)
+    page.update()

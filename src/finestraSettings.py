@@ -113,5 +113,4 @@ def finestraSettings(page: ft.Page):
     init_settings()
     init_settings_fields()
     page.add(layout)
-
-ft.app(target=finestraSettings)
+    page.update()
