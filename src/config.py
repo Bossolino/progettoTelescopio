@@ -5,7 +5,7 @@ import asyncio
 from fileLog.Log import cupola_logger 
 
 
-tema = ft.ThemeMode.SYSTEM
+tema = ""
 
 c_cupola = "0"
 c_telescopio = "1"

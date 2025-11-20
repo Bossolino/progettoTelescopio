@@ -11,6 +11,8 @@ def main(page: ft.Page):
     page.padding = 30
     page.spacing = 20
     page.theme_mode = tema
+    page.window.maximized = True
+    page.window.focused = True
        
 
     start_ascolto()# avvio l'ascolto sulla porta seriale
