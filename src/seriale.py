@@ -34,15 +34,18 @@ def getPorteDisponibili(): # prendo le porte disponibili
     porte_computer = serial.tools.list_ports.comports()
     for porta in porte_computer:
         porte.append(porta.device)
-        print(porta.device)
+        print(f"{porta.device}:{porta.description}")
     return porte
 
 def setPorta(): #funzione per ottenere la porta collegata al device
     porte = getPorteDisponibili() 
     for porta in porte: 
-        if porta.device == nome_device: #controlla se la porta è quella giusta cioè quella collegata al device
+        if porta.description == nome_device: #controlla se la porta è quella giusta cioè quella collegata al device
             porta_seriale = porta.name #mette la porta seriale trovata nella variabile vuota porta_seriale
             return porta_seriale
+    else:
+        logger_seriale.error("Dispositivo non trovato!") # impostare avviso di errore
+        return False
 
 
 thread_ascolto = threading.Thread(target=lambda e: ascolto(porta_seriale)) #creazione thread per ascoltare la porta
