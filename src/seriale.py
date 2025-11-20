@@ -4,6 +4,7 @@ import threading
 from fileLog.Log import logger_seriale
 
 porta_seriale = "" #variabile in cui settare la porta
+nome_device = "Arduino Uno" #nome del device collegato
 ascolta = False #variabile per continuare ad ascoltare finchè vuole l'utente o il programma non termina
 
 def ascolto(porta:str):# funzione per ascoltare la porta
@@ -35,6 +36,13 @@ def getPorteDisponibili(): # prendo le porte disponibili
         porte.append(porta.device)
         print(porta.device)
     return porte
+
+def setPorta():
+    porte = getPorteDisponibili()
+    for porta in porte:
+        if porta.device == nome_device:
+            porta_seriale = porta.name
+            return porta_seriale
 
 
 thread_ascolto = threading.Thread(target=lambda e: ascolto(porta_seriale)) #creazione thread per ascoltare la porta
