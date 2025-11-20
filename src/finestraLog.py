@@ -10,6 +10,8 @@ def finestraLog(page: ft.Page):
     page.padding = 30
     page.spacing = 20
     page.theme_mode = tema
+    page.window_width = 1920   # larghezza finestra
+    page.window_height = 1080   # altezza finestra
 
     isClear = True #per abilitare il pulsante clear che tanto se abilita lo stesso
 

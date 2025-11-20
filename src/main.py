@@ -2,15 +2,21 @@ import flet as ft
 from config import *
 import config
 from seriale import start_ascolto
+from flet_video import Video, VideoMedia
+
 
 
 def main(page: ft.Page):
+    # page.window.maximized = True
+    page.window.width = 1920
+    page.window.height = 1080
 
     #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
     page.theme_mode = tema
+    page.bgcolor = "#222222"
        
 
     start_ascolto()# avvio l'ascolto sulla porta seriale
@@ -118,11 +124,35 @@ def main(page: ft.Page):
         vertical_alignment=ft.CrossAxisAlignment.START,
     )
 
-    page.add(
-        ft.Row(
+    
+    layout = ft.Row(
             [log_layout,layout],
             expand=True,
-            vertical_alignment=ft.CrossAxisAlignment.START,),
+            vertical_alignment=ft.CrossAxisAlignment.START,)
+    video_bg = Video(
+        
+        playlist=[VideoMedia("src/assets/Composizione1.mp4")],
+        autoplay=True,
+        muted=True,
+        expand=True,
+        fit="COVER"
     )
+
+
+    page.add(
+        ft.Stack(
+            [
+                video_bg,
+                ft.Container(
+                    content=layout,
+                    alignment=ft.alignment.center,
+                    expand=True
+                )
+            ],
+            expand=True,
+            fit="COVER"
+        )
+    )
+
 
 ft.app(main)
