@@ -37,11 +37,11 @@ def getPorteDisponibili(): # prendo le porte disponibili
         print(porta.device)
     return porte
 
-def setPorta():
-    porte = getPorteDisponibili()
-    for porta in porte:
-        if porta.device == nome_device:
-            porta_seriale = porta.name
+def setPorta(): #funzione per ottenere la porta collegata al device
+    porte = getPorteDisponibili() 
+    for porta in porte: 
+        if porta.device == nome_device: #controlla se la porta è quella giusta cioè quella collegata al device
+            porta_seriale = porta.name #mette la porta seriale trovata nella variabile vuota porta_seriale
             return porta_seriale
 
 
