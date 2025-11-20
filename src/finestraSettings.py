@@ -1,8 +1,11 @@
 import flet as ft
-from config import tema
 from seriale import porta_seriale, nome_device, getPorteDisponibili
 import serial.tools.list_ports
 import json
+
+tema = ""
+page_width = 1920
+page_height = 1080
 
 def init_settings(): #print(data["application"]["tema"])
     global tema, porta_seriale, nome_device
@@ -30,8 +33,8 @@ def finestraSettings(page: ft.Page):
 
     page.title = "Ïmpostazioni"
     page.theme_mode = tema
-    page.window.maximized = True
-    page.window.focused = True
+    page.window.width = page_width
+    page.window.height = page_height
 
     def init_settings_fields():
         #init TEMA
@@ -79,6 +82,7 @@ def finestraSettings(page: ft.Page):
         elif selezione == "SYSTEM":
             tema = ft.ThemeMode.SYSTEM
             dropdownTema.leading_icon=ft.Icons.COMPUTER
+        setSetting("tema", selezione)
         page.theme_mode = tema
         page.update()
 
@@ -104,13 +108,13 @@ def finestraSettings(page: ft.Page):
 
     # Layout principale
     layout = ft.Column(
-        [navbar, body],
+        [finestra],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
         horizontal_alignment=ft.CrossAxisAlignment.START, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
     )
 
-    init_settings()
+    
     init_settings_fields()
     page.add(layout)
     page.update()

@@ -1,6 +1,6 @@
 import flet as ft
 from pathlib import Path
-from config import tema
+from finestraSettings import tema
 
 
 

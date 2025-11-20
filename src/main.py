@@ -5,11 +5,12 @@ from seriale import start_ascolto
 from flet_video import Video, VideoMedia
 import finestraLog
 import finestraSettings
+from finestraSettings import init_settings, page_height, page_width
 
 
 
 def main(page: ft.Page):
-
+    
     def mostra_log(page: ft.Page):
         page.clean()
         finestraLog.finestraLog(page)
@@ -18,9 +19,13 @@ def main(page: ft.Page):
         finestraSettings.finestraSettings(page)
     bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: mostra_log(page))
     bSetting = ft.ElevatedButton(text="Mostra Setting", on_click=lambda e: mostra_Setting(page))
+    
+    init_settings()
+    from finestraSettings import tema
+
     # page.window.maximized = True
-    page.window.width = 1920
-    page.window.height = 1080
+    page.window.width = page_width
+    page.window.height = page_height
 
     #impostazioni pagina
     page.title = "HOME"
@@ -29,7 +34,7 @@ def main(page: ft.Page):
     page.theme_mode = tema
     page.bgcolor = "#222222"
        
-
+    
     start_ascolto()# avvio l'ascolto sulla porta seriale
 
     # Testi coordinate
