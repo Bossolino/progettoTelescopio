@@ -86,7 +86,7 @@ def finestraSettings(page: ft.Page):
         page.theme_mode = tema
         page.update()
 
-     def mostra_home(page: ft.Page):
+    def mostra_home(page: ft.Page):
         import main
         page.clean()
         main.main(page)

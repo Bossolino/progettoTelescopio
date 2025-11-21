@@ -5,7 +5,7 @@ from finestraSettings import tema
 
 
 def finestraLog(page: ft.Page):
-     #impostazioni pagina
+    #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
