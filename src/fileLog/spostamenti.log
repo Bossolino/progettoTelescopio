@@ -1,49 +1,6 @@
-2025-11-16 22:39:23,893 - cupola - INFO - Cupola spostata a sinistra di 1. Nuova posizione: -1
-2025-11-16 22:52:27,538 - cupola - INFO - sinistra di: 1. pos: -1
-2025-11-16 22:52:28,237 - cupola - INFO - sinistra di: 1. pos: -2
-2025-11-16 22:52:28,433 - cupola - INFO - sinistra di: 1. pos: -3
-2025-11-16 22:52:28,629 - cupola - INFO - sinistra di: 1. pos: -4
-2025-11-16 22:52:28,799 - cupola - INFO - sinistra di: 1. pos: -5
-2025-11-17 00:08:45,117 - cupola - INFO - sinistra di: 1. pos: -1
-2025-11-17 00:08:45,270 - cupola - INFO - sinistra di: 1. pos: -2
-2025-11-17 00:08:45,405 - cupola - INFO - sinistra di: 1. pos: -3
-2025-11-17 00:08:45,550 - cupola - INFO - sinistra di: 1. pos: -4
-2025-11-17 00:08:45,733 - cupola - INFO - sinistra di: 1. pos: -5
-2025-11-17 00:08:45,909 - cupola - INFO - sinistra di: 1. pos: -6
-2025-11-17 00:08:46,062 - cupola - INFO - sinistra di: 1. pos: -7
-2025-11-17 00:08:46,206 - cupola - INFO - sinistra di: 1. pos: -8
-2025-11-17 00:08:46,414 - cupola - INFO - sinistra di: 1. pos: -9
-2025-11-17 00:08:46,542 - cupola - INFO - sinistra di: 1. pos: -10
-2025-11-17 00:08:59,622 - cupola - INFO - sinistra di: 1. pos: -11
-2025-11-17 00:09:01,688 - cupola - INFO - sinistra di: 1. pos: -12
-2025-11-17 00:09:01,813 - cupola - INFO - sinistra di: 1. pos: -13
-2025-11-17 00:09:01,941 - cupola - INFO - sinistra di: 1. pos: -14
-2025-11-17 00:09:02,071 - cupola - INFO - sinistra di: 1. pos: -15
-2025-11-17 00:09:02,189 - cupola - INFO - sinistra di: 1. pos: -16
-2025-11-17 00:09:02,326 - cupola - INFO - sinistra di: 1. pos: -17
-2025-11-17 00:09:02,605 - cupola - INFO - sinistra di: 1. pos: -18
-2025-11-17 00:09:02,742 - cupola - INFO - sinistra di: 1. pos: -19
-2025-11-17 00:09:02,871 - cupola - INFO - sinistra di: 1. pos: -20
-2025-11-17 00:09:02,999 - cupola - INFO - sinistra di: 1. pos: -21
-2025-11-17 00:09:03,118 - cupola - INFO - sinistra di: 1. pos: -22
-2025-11-17 00:09:03,270 - cupola - INFO - sinistra di: 1. pos: -23
-2025-11-17 00:09:03,423 - cupola - INFO - sinistra di: 1. pos: -24
-2025-11-17 00:09:03,807 - cupola - INFO - sinistra di: 1. pos: -25
-2025-11-17 00:09:04,160 - cupola - INFO - sinistra di: 1. pos: -26
-2025-11-17 00:09:04,289 - cupola - INFO - sinistra di: 1. pos: -27
-2025-11-17 00:09:04,447 - cupola - INFO - sinistra di: 1. pos: -28
-2025-11-17 00:09:04,576 - cupola - INFO - sinistra di: 1. pos: -29
-2025-11-17 00:09:04,711 - cupola - INFO - sinistra di: 1. pos: -30
-2025-11-17 00:09:04,856 - cupola - INFO - sinistra di: 1. pos: -31
-2025-11-17 00:09:04,992 - cupola - INFO - sinistra di: 1. pos: -32
-2025-11-17 00:09:05,135 - cupola - INFO - sinistra di: 1. pos: -33
-2025-11-17 00:09:05,270 - cupola - INFO - sinistra di: 1. pos: -34
-2025-11-20 22:17:16,195 - cupola - INFO - stop
-2025-11-20 22:17:16,908 - cupola - INFO - sinistra di: 1. pos: -1
-2025-11-20 22:17:17,078 - cupola - INFO - sinistra di: 1. pos: -2
-2025-11-20 22:17:17,234 - cupola - INFO - sinistra di: 1. pos: -3
-2025-11-20 22:17:17,384 - cupola - INFO - sinistra di: 1. pos: -4
-2025-11-20 22:17:17,550 - cupola - INFO - sinistra di: 1. pos: -5
-2025-11-20 22:17:17,701 - cupola - INFO - sinistra di: 1. pos: -6
-2025-11-20 22:17:19,979 - cupola - INFO - stop
-2025-11-20 22:17:20,288 - cupola - INFO - reset
+2025-11-21 23:26:41,710 - cupola - INFO - sinistra di: 1. pos: -1
+2025-11-21 23:26:42,714 - cupola - INFO - sinistra di: 1. pos: -2
+2025-11-21 23:26:42,901 - cupola - INFO - sinistra di: 1. pos: -3
+2025-11-21 23:26:43,078 - cupola - INFO - sinistra di: 1. pos: -4
+2025-11-21 23:26:43,246 - cupola - INFO - sinistra di: 1. pos: -5
+2025-11-21 23:26:43,450 - cupola - INFO - sinistra di: 1. pos: -6

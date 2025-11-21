@@ -1,4 +1,4 @@
-import flet as ft
+import flet as ft # type: ignore
 from config import *
 import config
 from seriale import start_ascolto
@@ -57,8 +57,8 @@ def main(page: ft.Page):
         page.update()
     
     #textField per input coordinate
-    input_destra = ft.TextField(label="Input destra", value=str(c_cupola), width=100)
-    input_sinistra = ft.TextField(label="Input sinistra", value=str(c_telescopio) , width=100)
+    input_destra = ft.TextField(label="Input destra", value=str(c_cupola), width=100, bgcolor=ft.Colors.WHITE)
+    input_sinistra = ft.TextField(label="Input sinistra", value=str(c_telescopio) , width=100, bgcolor=ft.Colors.WHITE)
 
     # Pulsanti
     p_destra = ft.ElevatedButton(text=" ", icon=ft.Icons.ARROW_RIGHT, on_click=lambda e: sposta_c_destra(input_destra.value and int(input_destra.value) or 0))
@@ -102,7 +102,7 @@ def main(page: ft.Page):
         alignment=ft.alignment.center,
         expand=False,
     )
-
+    
     log_list = ft.Column()
 
     def show_list (e):
@@ -117,20 +117,21 @@ def main(page: ft.Page):
         on_change=show_list,
     )
 
-    log_list.controls.append(
-            ft.Row(
-                [config.new_lista_log(page, "src/fileLog/spostamenti.log")],
-                expand=True,
-                vertical_alignment=ft.CrossAxisAlignment.START,
+    def aggiunta_cronologia(testo):
+        log_list.controls.append(
+                ft.Row(
+                    [ft.Text(testo)],
+                    expand=True,
+                    vertical_alignment=ft.CrossAxisAlignment.START,
+                )
             )
-        )
-    
+
 
     # Layout principale
     layout = ft.Column(
         [navbar, centro, footer, bLog, bSetting],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
-        horizontal_alignment=ft.CrossAxisAlignment.START, # allinea gli elementi in colonna al centro orizzontalmente
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
     )
 
