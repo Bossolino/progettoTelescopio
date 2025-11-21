@@ -2,6 +2,7 @@ import flet as ft # type: ignore
 from config import *
 import config
 
+
 def main(page: ft.Page):
 
     #impostazioni pagina
