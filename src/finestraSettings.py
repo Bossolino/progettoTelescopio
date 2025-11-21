@@ -86,6 +86,11 @@ def finestraSettings(page: ft.Page):
         page.theme_mode = tema
         page.update()
 
+     def mostra_home(page: ft.Page):
+        import main
+        page.clean()
+        main.main(page)
+
     dropdownTema = ft.Dropdown(
         options=[
             ft.DropdownOption(key="DARK", text="Scuro", leading_icon=ft.Icons.DARK_MODE),
