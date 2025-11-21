@@ -1,17 +1,40 @@
 import flet as ft # type: ignore
 from config import *
 import config
+from seriale import start_ascolto
+from flet_video import Video, VideoMedia
+import finestraLog
+import finestraSettings
+from finestraSettings import init_settings, page_height, page_width
+
 
 
 def main(page: ft.Page):
+    
+    def mostra_log(page: ft.Page):
+        page.clean()
+        finestraLog.finestraLog(page)
+    def mostra_Setting(page: ft.Page):
+        page.clean()
+        finestraSettings.finestraSettings(page)
+    bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: mostra_log(page))
+    bSetting = ft.ElevatedButton(text="Mostra Setting", on_click=lambda e: mostra_Setting(page))
+    
+    init_settings()
+    from finestraSettings import tema
+
+    # page.window.maximized = True
+    page.window.width = page_width
+    page.window.height = page_height
 
     #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.theme_mode = ft.ThemeMode.DARK
+    page.theme_mode = tema
+    page.bgcolor = "#222222"
        
-
+    
     start_ascolto()# avvio l'ascolto sulla porta seriale
 
     # Testi coordinate
@@ -83,12 +106,47 @@ def main(page: ft.Page):
 
     # Layout principale
     layout = ft.Column(
-        [navbar, centro, footer],
+        [navbar, centro, footer, bLog, bSetting],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
         horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
     )
 
-    page.add(layout)
+    log_layout = ft.Row(
+        [log_list,switch_show],
+        expand=True,
+        vertical_alignment=ft.CrossAxisAlignment.START,
+    )
+
+    
+    layout = ft.Row(
+            [log_layout,layout],
+            expand=True,
+            vertical_alignment=ft.CrossAxisAlignment.START,)
+    video_bg = Video(
+        
+        playlist=[VideoMedia("src/assets/Composizione1.mp4")],
+        autoplay=True,
+        muted=True,
+        expand=True,
+        fit="COVER"
+    )
+
+
+    page.add(
+        ft.Stack(
+            [
+                video_bg,
+                ft.Container(
+                    content=layout,
+                    alignment=ft.alignment.center,
+                    expand=True
+                )
+            ],
+            expand=True,
+            fit="COVER"
+        )
+    )
+
 
 ft.app(main)

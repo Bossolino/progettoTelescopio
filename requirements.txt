@@ -1,3 +1,4 @@
 flet
 pyserial
 logging
+flet-video
