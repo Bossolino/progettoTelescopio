@@ -86,10 +86,11 @@ def finestraSettings(page: ft.Page):
         page.theme_mode = tema
         page.update()
 
-     def mostra_home(page: ft.Page):
-        import main
+    def mostra_home(page: ft.Page):
+        from main import main
         page.clean()
-        main.main(page)
+        main(page)
+        print("vado home")
 
     dropdownTema = ft.Dropdown(
         options=[
@@ -105,7 +106,7 @@ def finestraSettings(page: ft.Page):
         options=[ft.DropdownOption(key=" ", text="Seleziona...", disabled=True)], label="Porta del device"
     )
 
-    btn_home = ft.ElevatedButton(icon=ft.Icons.ARROW_LEFT, text="HOME")
+    btn_home = ft.ElevatedButton(icon=ft.Icons.ARROW_LEFT, text="HOME", on_click= lambda e: mostra_home(page))
 
     navbar = ft.Row([btn_home])
     body = ft.Row([dropdownTema, dropdownPorta, txtfield_nome_device], spacing=50)
