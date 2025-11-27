@@ -2,6 +2,7 @@ import flet as ft
 from seriale import porta_seriale, nome_device, getPorteDisponibili
 import serial.tools.list_ports
 import json
+from pages import router
 
 tema = ""
 page_width = 1920
@@ -30,8 +31,7 @@ def editNome(nome:str):
     return nome_device
 
 def finestraSettings(page: ft.Page):
-
-    page.title = "Ïmpostazioni"
+    page.title = "Impostazioni"
     page.theme_mode = tema
     page.window.width = page_width
     page.window.height = page_height
@@ -86,12 +86,6 @@ def finestraSettings(page: ft.Page):
         page.theme_mode = tema
         page.update()
 
-    def mostra_home(page: ft.Page):
-        from main import main
-        page.clean()
-        main(page)
-        print("vado home")
-
     dropdownTema = ft.Dropdown(
         options=[
             ft.DropdownOption(key="DARK", text="Scuro", leading_icon=ft.Icons.DARK_MODE),
@@ -106,7 +100,7 @@ def finestraSettings(page: ft.Page):
         options=[ft.DropdownOption(key=" ", text="Seleziona...", disabled=True)], label="Porta del device"
     )
 
-    btn_home = ft.ElevatedButton(icon=ft.Icons.ARROW_LEFT, text="HOME", on_click= lambda e: mostra_home(page))
+    btn_home = ft.ElevatedButton(icon=ft.Icons.ARROW_LEFT, text="HOME", on_click= lambda e: router.go("home", page))
 
     navbar = ft.Row([btn_home])
     body = ft.Row([dropdownTema, dropdownPorta, txtfield_nome_device], spacing=50)
@@ -123,4 +117,4 @@ def finestraSettings(page: ft.Page):
     
     init_settings_fields()
     page.add(layout)
-    page.update()
+    return layout

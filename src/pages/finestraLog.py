@@ -1,6 +1,6 @@
 import flet as ft
 from pathlib import Path
-from finestraSettings import tema
+from pages.finestraSettings import tema
 
 
 
