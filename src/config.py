@@ -8,31 +8,26 @@ c_cupola = "0"
 c_telescopio = "1"
 
 def sposta_cupola_destra(sposta: int): # funzione per spostare la cupola a destra
-    from pages.finestraHome import aggiunta_cronologia
     global c_cupola
     if(sposta != 0): #aggiunto il controllo almeno non abbiamo spostamenti inutili nei file di log
         c_cupola = str(int(c_cupola) + sposta)
         cupola_logger.info(f"destra di {sposta}. pos: {c_cupola}")
-        aggiunta_cronologia(f"destra di {sposta}. pos: {c_cupola}")
 
 def sposta_cupola_sinistra(sposta: int): # funzione per spostare la cupola a sinistra
-    from pages.finestraHome import aggiunta_cronologia
+
     global c_cupola
     if(sposta != 0):
         c_cupola = str(int(c_cupola) - sposta)
         cupola_logger.info(f"sinistra di: {sposta}. pos: {c_cupola}")
-        aggiunta_cronologia(f"sinistra di: {sposta}. pos: {c_cupola}")
 
 def reset_posizioni(): # funzione per resettare le posizioni
-    from pages.finestraHome import aggiunta_cronologia
+    from pages import finestraHome
     global c_cupola, c_telescopio
     c_cupola = c_telescopio
     cupola_logger.info("reset")
-    aggiunta_cronologia("reset")
 def stop_movimento(): # funzione per fermare il movimento
     from pages.finestraHome import aggiunta_cronologia
     cupola_logger.info("stop")
-    aggiunta_cronologia("stop")
 
 
 #lista per i log

@@ -1,7 +1,7 @@
 {
     "application": {
         "version": "0.0.1",
-        "tema": "DARK",
+        "tema": "LIGHT",
         "portaSeriale": "",
         "nomeDevice": ""
     }

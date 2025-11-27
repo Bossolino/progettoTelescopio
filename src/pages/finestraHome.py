@@ -7,8 +7,6 @@ from flet_video import Video, VideoMedia
 from pages.finestraSettings import init_settings, page_height, page_width
 from pages import router
 
-
-
 def home(page: ft.Page):
     bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page))
     bSetting = ft.ElevatedButton(text="Mostra Setting", on_click=lambda e: router.go("settings",page))
@@ -108,14 +106,7 @@ def home(page: ft.Page):
         on_change=show_list,
     )
 
-    def aggiunta_cronologia(testo):
-        log_list.controls.append(
-                ft.Row(
-                    [ft.Text(testo)],
-                    expand=True,
-                    vertical_alignment=ft.CrossAxisAlignment.START,
-                )
-            )
+    
 
 
     # Layout principale
