@@ -13,8 +13,8 @@ def home(page: ft.Page):
     
     init_settings()
     from pages.finestraSettings import tema
-    page.window.width = page_width
-    page.window.height = page_height
+    page.window.width = 1400#page_width
+    page.window.height = 700#page_height
 
     #impostazioni pagina
     page.title = "HOME"
@@ -25,20 +25,30 @@ def home(page: ft.Page):
     
     
     start_ascolto()# avvio l'ascolto sulla porta seriale
-
+    
+    def add_log(messaggio: str):
+        """Aggiunge un messaggio al log"""
+        log_entry = ft.Text(messaggio, size=12, color=ft.Colors.GREY_400)
+        log_list.controls.insert(0, log_entry)  # aggiunge in cima
+        page.update()
+        
     # Testi coordinate
     c_cupola_testo = ft.Text(f"coordinata Cupola: {config.c_cupola}", size=16)
     c_telescopio_testo = ft.Text(f"coordinata Telescopio: {config.c_telescopio}", size=16)
 
     #funzioni dei pulsanti per aggiornare le coordinate e la pagina
     def sposta_c_destra(sposta: int):
-        config.sposta_cupola_destra(sposta)
-        c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
-        page.update()
+        msg = config.sposta_cupola_destra(sposta)
+        if msg:
+            add_log(msg)
+            c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
+            page.update()
     def sposta_c_sinistra(sposta: int):
-        config.sposta_cupola_sinistra(sposta)
-        c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
-        page.update()
+        msg = config.sposta_cupola_sinistra(sposta)
+        if msg:
+            add_log(msg)
+            c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
+            page.update()
     def r_posizioni():
         config.reset_posizioni()
         c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
@@ -91,8 +101,6 @@ def home(page: ft.Page):
         alignment=ft.alignment.center,
         expand=False,
     )
-    
-    log_list = ft.Column()
 
     def show_list (e):
         log_list.visible = not log_list.visible
@@ -106,8 +114,6 @@ def home(page: ft.Page):
         on_change=show_list,
     )
 
-    
-
 
     # Layout principale
     layout = ft.Column(
@@ -116,12 +122,28 @@ def home(page: ft.Page):
         horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
     )
+    
+    log_list = ft.Column(
+        scroll=ft.ScrollMode.AUTO,
+        spacing=5,
+    )
 
+    
+    page.theme = ft.Theme(
+        scrollbar_theme=ft.ScrollbarTheme(
+            thickness=4,
+            track_color="#111111",
+            thumb_color="#444444",
+        )
+    )
+    
     log_layout = ft.Row(
-        [log_list,switch_show],
-        expand=True,
+        [log_list, switch_show],  # usa log_container invece di log_list
+        expand=False,
+        width=200,
         vertical_alignment=ft.CrossAxisAlignment.START,
     )
+    
 
     
     layout = ft.Row(
@@ -150,3 +172,4 @@ def home(page: ft.Page):
             fit="COVER"
         )
     return pagina
+
