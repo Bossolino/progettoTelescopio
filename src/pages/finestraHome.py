@@ -12,6 +12,7 @@ def home(page: ft.Page):
     
     page.window.width = 1400#page_width
     page.window.height = 800#page_height
+    page.window.center()
 
     #impostazioni pagina
     page.title = "HOME"
