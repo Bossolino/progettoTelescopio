@@ -4,7 +4,7 @@ import flet as ft
 import asyncio
 from fileLog.Log import cupola_logger 
 
-c_cupola = "0"
+c_cupola = "1"
 c_telescopio = "1"
 
 def sposta_cupola_destra(sposta: int): # funzione per spostare la cupola a destra
