@@ -8,8 +8,9 @@ from pages.finestraSettings import init_settings, page_height, page_width
 from pages import router
 
 def home(page: ft.Page):
-    bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page))
-    bSetting = ft.ElevatedButton(text="Mostra Setting", on_click=lambda e: router.go("settings",page))
+    bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page), icon_color=ft.Colors.WHITE)
+    bSetting = ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e: router.go("settings",page), icon_color=ft.Colors.WHITE, icon_size=35, alignment=ft.alignment.top_right)
+    bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
     
     init_settings()
     from pages.finestraSettings import tema
@@ -26,10 +27,15 @@ def home(page: ft.Page):
     
     start_ascolto()# avvio l'ascolto sulla porta seriale
     
+    # per la cronologia
     def add_log(messaggio: str):
-        """Aggiunge un messaggio al log"""
         log_entry = ft.Text(messaggio, size=12, color=ft.Colors.GREY_400)
         log_list.controls.insert(0, log_entry)  # aggiunge in cima
+        page.update()
+        
+    # per il clear della cronologia
+    def clear_log():
+        log_list.controls.clear()
         page.update()
         
     # Testi coordinate
@@ -69,7 +75,7 @@ def home(page: ft.Page):
 
     # Navbar e centro
     navbar = ft.Row(
-        [c_cupola_testo, c_telescopio_testo], #aggiunti i testi delle coordinate
+        [c_cupola_testo, c_telescopio_testo, bSetting], #aggiunti i testi delle coordinate
         alignment=ft.MainAxisAlignment.SPACE_EVENLY,  # allinea gli elementi in modo EVENLY orizzontalmente
         vertical_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi al centro verticalmente
         height=60,
@@ -117,7 +123,7 @@ def home(page: ft.Page):
 
     # Layout principale
     layout = ft.Column(
-        [navbar, centro, footer, bLog, bSetting],
+        [navbar, centro, footer],
         alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
         horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
         expand=True,  #  importantissimo: riempie tutta la finestra
@@ -137,8 +143,13 @@ def home(page: ft.Page):
         )
     )
     
+    roba_log = ft.Column( #scusa menghi per il nome
+        [switch_show, bLog, bClear],
+        spacing=10,
+    )
+    
     log_layout = ft.Row(
-        [log_list, switch_show],  # usa log_container invece di log_list
+        [log_list, roba_log],  # usa log_container invece di log_list
         expand=False,
         width=200,
         vertical_alignment=ft.CrossAxisAlignment.START,
