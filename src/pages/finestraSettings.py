@@ -14,16 +14,18 @@ def finestraSettings(page: ft.Page):
     def init_settings_fields():
         #init TEMA
         global settings
-
-        dropdownTema.value = settings.page.theme
         print(f"init Tema dropdown: {dropdownTema.value}")
-        if settings.page.theme == "ThemeMode.LIGHT" or settings.page.theme == "LIGHT":
+        print(f"settings theme: {settings.page.theme}")
+        if settings.page.theme == ft.ThemeMode.LIGHT or settings.page.theme == "LIGHT":
+            dropdownTema.value = "LIGHT"
             settings.page.theme = ft.ThemeMode.LIGHT
             dropdownTema.leading_icon=ft.Icons.LIGHT_MODE
-        elif settings.page.theme == "ThemeMode.DARK" or settings.page.theme == "DARK":
+        elif settings.page.theme== ft.ThemeMode.DARK or settings.page.theme == "DARK":
+            dropdownTema.value = "DARK"
             settings.page.theme = ft.ThemeMode.DARK
-            dropdownTema.leading_icon=ft.Icons.DARK_MODE
-        else:
+            dropdownTema.leading_icon = ft.Icons.DARK_MODE
+        elif settings.page.theme == ft.ThemeMode.SYSTEM or settings.page.theme == "SYSTEM":
+            dropdownTema.value = "SYSTEM"
             settings.page.theme = ft.ThemeMode.SYSTEM
             dropdownTema.leading_icon=ft.Icons.COMPUTER
         page.theme_mode = settings.page.theme

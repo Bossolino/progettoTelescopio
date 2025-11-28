@@ -6,22 +6,23 @@ from pages import router
 from settings import settings
 
 def home(page: ft.Page):
+    global settings
     bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page), icon_color=ft.Colors.WHITE)
     bSetting = ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e: router.go("settings",page), icon_color=ft.Colors.WHITE, icon_size=35, alignment=ft.alignment.top_right)
     bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
     
-    page.window.width = 1400#page_width
-    page.window.height = 800#page_height
+    
+
+    page.window.width = settings.page.windowWidth#page_width
+    page.window.height = settings.page.windowHeight#page_height
     page.window.center()
 
     #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    global settings
     page.theme_mode = settings.page.theme
     page.bgcolor = "#222222"
-    
     
     start_ascolto()# avvio l'ascolto sulla porta seriale
     
@@ -66,8 +67,8 @@ def home(page: ft.Page):
     # Pulsanti
     p_destra = ft.ElevatedButton(text=" ", icon=ft.Icons.ARROW_RIGHT, on_click=lambda e: sposta_c_destra(input_destra.value and int(input_destra.value) or 0))
     p_sinistra = ft.ElevatedButton(text=" ", icon=ft.Icons.ARROW_LEFT, on_click=lambda e: sposta_c_sinistra(input_sinistra.value and int(input_sinistra.value) or 0))
-    p_stop = ft.ElevatedButton(text="Pulsante Stop", icon=ft.Icons.STOP, on_click=lambda e: config.stop_movimento())
-    p_reset = ft.ElevatedButton(text="Pulsante Reset", icon=ft.Icons.REFRESH, on_click=lambda e: r_posizioni())
+    p_stop = ft.ElevatedButton(text="Stop", icon=ft.Icons.STOP, on_click=lambda e: config.stop_movimento())
+    p_reset = ft.ElevatedButton(text="Reset", icon=ft.Icons.REFRESH, on_click=lambda e: r_posizioni())
 
     
 
