@@ -10,7 +10,7 @@ from pages import router
 def home(page: ft.Page):
     bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page), icon_color=ft.Colors.WHITE)
     bSetting = ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e: router.go("settings",page), icon_color=ft.Colors.WHITE, icon_size=35, alignment=ft.alignment.top_right)
-    bClear = ft.ElevatedButton(text="Clear Log", on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE)
+    bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
     
     init_settings()
     from pages.finestraSettings import tema
