@@ -11,7 +11,7 @@ def home(page: ft.Page):
     bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
     
     page.window.width = 1400#page_width
-    page.window.height = 700#page_height
+    page.window.height = 800#page_height
 
     #impostazioni pagina
     page.title = "HOME"

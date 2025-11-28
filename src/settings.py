@@ -13,7 +13,7 @@ class Settings:
             self.theme = ft.ThemeMode.SYSTEM
             self.pageFullscreen = False
             self.windowWidth = 1400
-            self.windowHeight = 700
+            self.windowHeight = 800
     
     class Seriale:
         def __init__(self):
