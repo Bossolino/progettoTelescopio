@@ -166,6 +166,7 @@
 2025-11-28 15:54:06,535 - cupola - INFO - sinistra di 1. pos: -4
 2025-11-28 15:58:30,376 - cupola - INFO - sinistra di 1. pos: -1
 2025-11-28 15:58:32,811 - cupola - INFO - sinistra di 1. pos: -2
+<<<<<<< HEAD
 2025-11-28 16:17:56,079 - cupola - INFO - sinistra di 1. pos: -1
 2025-11-28 16:17:56,308 - cupola - INFO - sinistra di 1. pos: -2
 2025-11-28 22:57:51,557 - cupola - INFO - sinistra di 1. pos: -1
@@ -174,3 +175,16 @@
 2025-11-28 22:59:58,025 - cupola - INFO - sinistra di 1. pos: -4
 2025-11-28 23:00:10,098 - cupola - INFO - stop
 2025-11-28 23:00:10,919 - cupola - INFO - reset
+=======
+2025-11-28 19:47:02,589 - cupola - INFO - sinistra di 1. pos: -1
+2025-11-28 19:47:02,910 - cupola - INFO - sinistra di 1. pos: -2
+2025-11-28 19:47:03,223 - cupola - INFO - sinistra di 1. pos: -3
+2025-11-28 19:47:03,377 - cupola - INFO - sinistra di 1. pos: -4
+2025-11-28 19:47:03,565 - cupola - INFO - sinistra di 1. pos: -5
+2025-11-28 19:55:29,795 - cupola - INFO - sinistra di 1. pos: -1
+2025-11-28 19:55:29,956 - cupola - INFO - sinistra di 1. pos: -2
+2025-11-28 19:55:30,115 - cupola - INFO - sinistra di 1. pos: -3
+2025-11-28 19:55:30,283 - cupola - INFO - sinistra di 1. pos: -4
+2025-11-28 19:55:30,435 - cupola - INFO - sinistra di 1. pos: -5
+2025-11-28 19:55:30,603 - cupola - INFO - sinistra di 1. pos: -6
+>>>>>>> 3f8013a1c5b32031554349e04c72760f2ef80604
