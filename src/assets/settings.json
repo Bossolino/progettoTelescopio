@@ -1,7 +1,9 @@
 {
-    "application": {
+    "page": {
         "version": "0.0.1",
-        "tema": "LIGHT",
+        "tema": "LIGHT"
+    },
+    "seriale": {
         "portaSeriale": "",
         "nomeDevice": ""
     }

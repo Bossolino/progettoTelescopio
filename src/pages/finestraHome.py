@@ -2,18 +2,14 @@ import flet as ft # type: ignore
 import config
 from seriale import start_ascolto
 from flet_video import Video, VideoMedia
-# import pages.finestraLog as finestraLog
-# import pages.finestraSettings as finestraSettings
-from pages.finestraSettings import init_settings, page_height, page_width
 from pages import router
+from settings import settings
 
 def home(page: ft.Page):
     bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page), icon_color=ft.Colors.WHITE)
     bSetting = ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e: router.go("settings",page), icon_color=ft.Colors.WHITE, icon_size=35, alignment=ft.alignment.top_right)
     bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
     
-    init_settings()
-    from pages.finestraSettings import tema
     page.window.width = 1400#page_width
     page.window.height = 700#page_height
 
@@ -21,7 +17,8 @@ def home(page: ft.Page):
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.theme_mode = tema
+    global settings
+    page.theme_mode = settings.page.theme
     page.bgcolor = "#222222"
     
     

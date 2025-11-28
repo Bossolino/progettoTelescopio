@@ -1,17 +1,15 @@
 import flet as ft
 from pathlib import Path
-from pages.finestraSettings import tema
-
-
+from settings import settings
 
 def finestraLog(page: ft.Page):
     #impostazioni pagina
     page.title = "HOME"
     page.padding = 30
     page.spacing = 20
-    page.theme_mode = tema
-    page.window_width = 1920   # larghezza finestra
-    page.window_height = 1080   # altezza finestra
+    page.theme_mode = settings.page.theme
+    page.window_width = settings.page.windowWidth   # larghezza finestra
+    page.window_height = settings.page.windowHeight   # altezza finestra
 
     isClear = True #per abilitare il pulsante clear che tanto se abilita lo stesso
 
