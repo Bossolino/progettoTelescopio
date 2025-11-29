@@ -16,7 +16,7 @@ class Settings:
             self.windowHeight = 800
              #IMPOSTARE I CODICI COLORE PRIMA DI USARE LE FUNZIONI
 
-        def self.setColorsDark(self, page:ft.Page):
+        def setColorsDark(self, page:ft.Page):
             page.dark_theme = ft.Theme(
             color_scheme=ft.ColorScheme(
                 brightness=ft.Brightness.DARK,
@@ -29,7 +29,7 @@ class Settings:
             )
         )
     
-        def self.setColorsLight(self, page:ft.Page):
+        def setColorsLight(self, page:ft.Page):
             page.theme = ft.Theme(
             color_scheme=ft.ColorScheme(
                 primary=ft.colors.BLUE_500,
@@ -61,7 +61,7 @@ class Settings:
             json.dump(data, f, indent=4)
         return
     
-class Colors:
+# class Colors:
     # bgColor = ""
     # btnColor = ""
     # txtColor = ""
