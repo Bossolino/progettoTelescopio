@@ -1,0 +1,10 @@
+{
+    "page": {
+        "version": "0.0.1",
+        "tema": "DARK"
+    },
+    "seriale": {
+        "portaSeriale": "",
+        "nomeDevice": ""
+    }
+}
