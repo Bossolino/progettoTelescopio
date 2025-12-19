@@ -24,8 +24,13 @@ def home(page: ft.Page):
     page.theme_mode = settings.page.theme
     page.bgcolor = "#222222"
     
-    start_ascolto()# avvio l'ascolto sulla porta seriale
-    
+    if not settings.seriale.inAscolto:
+        try:
+            ##SI AVVIA IL THREAD MA NON SI CHIUDE DA SOLO
+            #start_ascolto()# avvio l'ascolto sulla porta seriale
+            print("")
+        except Exception as exept:
+            print("ERRORE: Ascolto non avviato!. ", exept)
     # per la cronologia
     def add_log(messaggio: str):
         log_entry = ft.Text(messaggio, size=12, color=ft.Colors.GREY_400)

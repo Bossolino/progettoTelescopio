@@ -1,10 +1,10 @@
 {
     "page": {
         "version": "0.0.1",
-        "tema": "DARK"
+        "tema": "SYSTEM"
     },
     "seriale": {
-        "portaSeriale": "",
-        "nomeDevice": ""
+        "portaSeriale": "COM5",
+        "nomeDevice": "Arduino Uno (COM5)"
     }
 }
