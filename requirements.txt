@@ -1,4 +1,5 @@
-flet
-pyserial
-logging
-flet-video
+flet == 0.28.3
+flet-desktop == 0.28.3
+flet-video == 0.1.1
+pyserial == 3.5
+logging == 0.4.9.6
