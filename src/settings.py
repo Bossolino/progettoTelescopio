@@ -14,7 +14,7 @@ class Settings:
             self.pageFullscreen = False
             self.windowWidth = 1400
             self.windowHeight = 800
-             #IMPOSTARE I CODICI COLORE PRIMA DI USARE LE FUNZIONI
+            #IMPOSTARE I CODICI COLORE PRIMA DI USARE LE FUNZIONI
 
         def setColorsDark(self, page:ft.Page):
             page.dark_theme = ft.Theme(
@@ -45,6 +45,23 @@ class Settings:
         def __init__(self):
             self.porta_seriale = ""
             self.nome_device = ""
+            self.ascolta = False
+            self.inAscolto = False
+
+        def savePorta(self, e):
+            porta_scelta = e.data
+            from seriale import getPorteDisponibili
+            porte_disp = getPorteDisponibili()
+            settings.setSetting("seriale", "portaSeriale", porta_scelta)
+            settings.setSetting("seriale", "nomeDevice", porte_disp[porta_scelta])
+            print(f"salvo porta {porta_scelta}")
+            
+            from seriale import start_ascolto, stop_ascolto,thread_ascolto
+            if thread_ascolto.is_alive():
+                print("thread aperto")
+                stop_ascolto()
+            start_ascolto()
+            return
         
     def init_settings(self): #print(data["application"]["tema"])
         with open("src/assets/settings.json", "r") as f:
@@ -80,9 +97,6 @@ class Settings:
     #     txtColor : "",
     #     color1 : ""
     # }
-
-
-   
 
 
 settings = Settings()
