@@ -4,7 +4,7 @@
         "tema": "SYSTEM"
     },
     "seriale": {
-        "portaSeriale": "COM5",
-        "nomeDevice": "Arduino Uno (COM5)"
+        "portaSeriale": "COM4",
+        "nomeDevice": "Arduino Uno (COM4)"
     }
 }

@@ -16,7 +16,7 @@ def getPorteDisponibili(): # prendo le porte disponibili
     return porte
 
 def setPorta(): #funzione per ottenere la porta collegata al device
-    porte = getPorteDisponibili() 
+    porte = getPorteDisponibili()
     for porta in porte: 
         if porta.description == settings.seriale.nome_device: #controlla se la porta è quella giusta cioè quella collegata al device
             settings.seriale.porta_seriale = porta.name #mette la porta seriale trovata nella variabile vuota porta_seriale
@@ -30,6 +30,7 @@ def start_ascolto():# funzione per avviare l'ascolto
         return logger_seriale.error("Porta seriale non indicata!")
     if settings.seriale.porta_seriale in getPorteDisponibili(): # controllo se la porta impostata è disponibile
         settings.seriale.ascolta = True
+        print("Thread avviato!")
         thread_ascolto.start() # se la porta è libera avvio il thread
     else:
         logger_seriale.error(f"La porta seriale {settings.seriale.porta_seriale} non è disponibile.")
@@ -40,10 +41,10 @@ def ascolto(porta:str):# funzione per ascoltare la porta
     settings.seriale.inAscolto = True
     while settings.seriale.ascolta:
         dato = ascolto.readline()
-    dato_str = dato.decode('utf-8', errors='ignore').strip()
-    if dato_str:
-        logger_seriale.info(f"Ricevuto: {dato_str}")
-        print(f"Ricevuto: {dato_str}")
+        dato_str = dato.decode('utf-8', errors='ignore').strip()
+        if dato_str:
+            logger_seriale.info(f"Ricevuto: {dato_str}")
+            print(f"Ricevuto: {dato_str}")
     print("Thread chiuso.")
     logger_seriale.info("Thread chiuso.")
 
@@ -53,7 +54,5 @@ def stop_ascolto(e=None):
         settings.seriale.ascolta = False
         thread_ascolto.join(timeout=2)  # 👈 ASPETTA che finisca!
         print("✓ Thread fermato")
-    if settings.seriale.porta_seriale.is_open:
-        settings.seriale.porta_seriale.close()
 
 thread_ascolto = threading.Thread(target =lambda: ascolto(settings.seriale.porta_seriale)) #creazione thread per ascoltare la porta

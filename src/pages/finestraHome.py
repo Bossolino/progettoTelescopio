@@ -27,8 +27,8 @@ def home(page: ft.Page):
     if not settings.seriale.inAscolto:
         try:
             ##SI AVVIA IL THREAD MA NON SI CHIUDE DA SOLO
-            #start_ascolto()# avvio l'ascolto sulla porta seriale
-            print("")
+            start_ascolto()# avvio l'ascolto sulla porta seriale
+            
         except Exception as exept:
             print("ERRORE: Ascolto non avviato!. ", exept)
     # per la cronologia

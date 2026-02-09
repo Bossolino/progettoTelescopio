@@ -54,9 +54,11 @@ class Settings:
             porte_disp = getPorteDisponibili()
             settings.setSetting("seriale", "portaSeriale", porta_scelta)
             settings.setSetting("seriale", "nomeDevice", porte_disp[porta_scelta])
+            print(f"salvo porta {porta_scelta}")
             
             from seriale import start_ascolto, stop_ascolto,thread_ascolto
             if thread_ascolto.is_alive():
+                print("thread aperto")
                 stop_ascolto()
             start_ascolto()
             return
