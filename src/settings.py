@@ -60,7 +60,7 @@ class Settings:
             if thread_ascolto.is_alive():
                 print("thread aperto")
                 stop_ascolto()
-            start_ascolto()
+            start_ascolto(self.porta_seriale)
             return
         
     def init_settings(self): #print(data["application"]["tema"])
