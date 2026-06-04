@@ -1,10 +1,10 @@
 {
     "page": {
         "version": "0.0.1",
-        "tema": "SYSTEM"
+        "tema": "DARK"
     },
     "seriale": {
-        "portaSeriale": "COM4",
-        "nomeDevice": "Arduino Uno (COM4)"
+        "portaSeriale": "COM3",
+        "nomeDevice": "Dispositivo seriale USB (COM3)"
     }
 }

@@ -1,26 +1,26 @@
 import logging
 from pathlib import Path
 import flet as ft
-import asyncio
+from seriale import set_pos
 from fileLog.Log import cupola_logger 
+from settings import settings
 
-c_cupola = "1"
-c_telescopio = "1"
+c_cupola = 4
+c_telescopio = 1
 
-def sposta_cupola_destra(sposta: int): # funzione per spostare la cupola a destra
+def sposta_cupola_destra(sposta: int):
     global c_cupola
-    if(sposta != 0): #aggiunto il controllo almeno non abbiamo spostamenti inutili nei file di log
-        c_cupola = str(int(c_cupola) + sposta)
-        msg = f"destra di {sposta}. pos: {c_cupola}"
+    if sposta != 0:
+        set_pos(settings.seriale.pos_cup + sposta)  # ✅ usa sposta, non c_cupola
+        msg = f"destra di {sposta}. pos: {settings.seriale.pos_cup}"
         cupola_logger.info(msg)
         return msg
 
-def sposta_cupola_sinistra(sposta: int): # funzione per spostare la cupola a sinistra
-
+def sposta_cupola_sinistra(sposta: int):
     global c_cupola
-    if(sposta != 0):
-        c_cupola = str(int(c_cupola) - sposta)
-        msg = f"sinistra di {sposta}. pos: {c_cupola}"
+    if sposta != 0:
+        set_pos(settings.seriale.pos_cup - sposta)  # ✅ usa sposta, non c_cupola
+        msg = f"sinistra di {sposta}. pos: {settings.seriale.pos_cup}"
         cupola_logger.info(msg)
         return msg
 

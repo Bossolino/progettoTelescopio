@@ -47,6 +47,9 @@ class Settings:
             self.nome_device = ""
             self.ascolta = False
             self.inAscolto = False
+            self.ready = False
+            self.pos_cup = 0
+            self.pos_tel = 0
 
         def savePorta(self, e):
             porta_scelta = e.data
@@ -60,7 +63,7 @@ class Settings:
             if thread_ascolto.is_alive():
                 print("thread aperto")
                 stop_ascolto()
-            start_ascolto()
+            start_ascolto(self.porta_seriale)
             return
         
     def init_settings(self): #print(data["application"]["tema"])

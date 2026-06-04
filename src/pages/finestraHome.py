@@ -1,190 +1,412 @@
-import flet as ft # type: ignore
+import flet as ft  # type: ignore
 import config
 from seriale import start_ascolto
 from flet_video import Video, VideoMedia
 from pages import router
 from settings import settings
+from pages.theme import apply_theme, palette, DARK
+import seriale
 
+# ── Helpers ───────────────────────────────────────────────────────────────────
+def _card(content, p, padding=16, expand=False, width=None, height=None):
+    return ft.Container(
+        content=content,
+        bgcolor=p.SURFACE,
+        border=ft.border.all(1, p.BORDER),
+        border_radius=10,
+        padding=padding,
+        expand=expand,
+        width=width,
+        height=height,
+    )
+
+def _label(text, p, size=11):
+    return ft.Text(
+        text.upper(),
+        size=size,
+        color=p.TEXT_DIM,
+        weight=ft.FontWeight.W_600,
+        style=ft.TextStyle(letter_spacing=1.5),
+    )
+
+def _divider(p):
+    return ft.Container(height=1, bgcolor=p.BORDER, margin=ft.margin.symmetric(vertical=6))
+
+
+# ── Page ──────────────────────────────────────────────────────────────────────
 def home(page: ft.Page):
     global settings
-    bLog = ft.ElevatedButton(text="Mostra Log", on_click=lambda e: router.go("log",page), icon_color=ft.Colors.WHITE)
-    bSetting = ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e: router.go("settings",page), icon_color=ft.Colors.WHITE, icon_size=35, alignment=ft.alignment.top_right)
-    bClear = ft.IconButton(icon=ft.CupertinoIcons.TRASH_CIRCLE, on_click=lambda e: clear_log(), icon_color=ft.Colors.WHITE, icon_size=35)
-    
-    
 
-    page.window.width = settings.page.windowWidth#page_width
-    page.window.height = settings.page.windowHeight#page_height
+    page.window.width  = settings.page.windowWidth
+    page.window.height = settings.page.windowHeight
     page.window.center()
+    page.title   = "Observatory Control"
+    page.padding = 0
+    page.spacing = 0
 
-    #impostazioni pagina
-    page.title = "HOME"
-    page.padding = 30
-    page.spacing = 20
-    page.theme_mode = settings.page.theme
-    page.bgcolor = "#222222"
-    
+    apply_theme(page, settings.page.theme)
+    p = palette(page)
+
+    # ── Serial init ───────────────────────────────────────────────────────
     if not settings.seriale.inAscolto:
         try:
-            ##SI AVVIA IL THREAD MA NON SI CHIUDE DA SOLO
-            start_ascolto()# avvio l'ascolto sulla porta seriale
-            
-        except Exception as exept:
-            print("ERRORE: Ascolto non avviato!. ", exept)
-    # per la cronologia
-    def add_log(messaggio: str):
-        log_entry = ft.Text(messaggio, size=12, color=ft.Colors.GREY_400)
-        log_list.controls.insert(0, log_entry)  # aggiunge in cima
-        page.update()
-        
-    # per il clear della cronologia
-    def clear_log():
-        log_list.controls.clear()
-        page.update()
-        
-    # Testi coordinate
-    c_cupola_testo = ft.Text(f"coordinata Cupola: {config.c_cupola}", size=16)
-    c_telescopio_testo = ft.Text(f"coordinata Telescopio: {config.c_telescopio}", size=16)
+            from seriale import setPorta
+            setPorta()
+            start_ascolto(settings.seriale.porta_seriale)
+        except Exception as exc:
+            print("ERRORE: Ascolto non avviato!", exc)
 
-    #funzioni dei pulsanti per aggiornare le coordinate e la pagina
-    def sposta_c_destra(sposta: int):
+    # ── Log ───────────────────────────────────────────────────────────────
+    log_list = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=2, expand=True)
+
+    def add_log(msg: str):
+        dot_color = p.SUCCESS if ("←" in msg or "→" in msg) else p.ACCENT
+        row = ft.Row(
+            [
+                ft.Container(width=6, height=6, bgcolor=dot_color, border_radius=3),
+                ft.Text(msg, size=11, color=p.TEXT_SEC, expand=True),
+            ],
+            spacing=8,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        )
+        log_list.controls.insert(0, row)
+        if len(log_list.controls) > 80:
+            log_list.controls.pop()
+        page.update()  # ✅
+
+    # ── Coordinate values ─────────────────────────────────────────────────
+    val_cupola = ft.Text(
+        f"{settings.seriale.pos_cup}°", size=28, color=p.ACCENT2, weight=ft.FontWeight.W_300,
+    )
+    val_telescopio = ft.Text(
+        f"{settings.seriale.pos_tel}°", size=28, color=p.SUCCESS, weight=ft.FontWeight.W_300,
+    )
+
+    
+
+    def _refresh_coords():
+        val_cupola.value     = f"{settings.seriale.pos_cup}°"
+        val_telescopio.value = f"{settings.seriale.pos_tel}°"
+        t_attivo.value  = "Sistema attivo" if settings.seriale.ready else "Sistema inattivo"
+        t_attivo.color  = p.SUCCESS if settings.seriale.ready else p.DANGER
+        status_dot.bgcolor = p.SUCCESS if settings.seriale.ready else p.DANGER
+        page.update()  # ✅ è già thread-safe in Flet
+
+    # ── Movement callbacks ────────────────────────────────────────────────
+    def sposta_destra(sposta: int):
         msg = config.sposta_cupola_destra(sposta)
         if msg:
-            add_log(msg)
-            c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
-            page.update()
-    def sposta_c_sinistra(sposta: int):
+            add_log(f"→ {msg}")
+        _refresh_coords()
+
+    def sposta_sinistra(sposta: int):
         msg = config.sposta_cupola_sinistra(sposta)
         if msg:
-            add_log(msg)
-            c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
-            page.update()
-    def r_posizioni():
+            add_log(f"← {msg}")
+        _refresh_coords()
+
+    def reset_posizioni():
         config.reset_posizioni()
-        c_cupola_testo.value = f"coordinata Cupola: {config.c_cupola}"
-        c_telescopio_testo.value = f"coordinata Telescopio: {config.c_telescopio}"
-        page.update()
-    
-    #textField per input coordinate
-    input_destra = ft.TextField(label="Input destra", value=str(config.c_cupola), width=100, bgcolor=ft.Colors.WHITE)
-    input_sinistra = ft.TextField(label="Input sinistra", value=str(config.c_telescopio) , width=100, bgcolor=ft.Colors.WHITE)
+        add_log("Posizioni resettate")
+        _refresh_coords()
 
-    # Pulsanti
-    p_destra = ft.ElevatedButton(text=" ", icon=ft.Icons.ARROW_RIGHT, on_click=lambda e: sposta_c_destra(input_destra.value and int(input_destra.value) or 0))
-    p_sinistra = ft.ElevatedButton(text=" ", icon=ft.Icons.ARROW_LEFT, on_click=lambda e: sposta_c_sinistra(input_sinistra.value and int(input_sinistra.value) or 0))
-    p_stop = ft.ElevatedButton(text="Stop", icon=ft.Icons.STOP, on_click=lambda e: config.stop_movimento())
-    p_reset = ft.ElevatedButton(text="Reset", icon=ft.Icons.REFRESH, on_click=lambda e: r_posizioni())
-
-    
-
-    # Navbar e centro
-    navbar = ft.Row(
-        [c_cupola_testo, c_telescopio_testo, bSetting], #aggiunti i testi delle coordinate
-        alignment=ft.MainAxisAlignment.SPACE_EVENLY,  # allinea gli elementi in modo EVENLY orizzontalmente
-        vertical_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi al centro verticalmente
-        height=60,
-    )
-
-    centro = ft.Container(
-        ft.Text("CONTENUTO CENTRALE", size=18),
-        alignment=ft.alignment.center,
-        expand=True,  # si espande verticalmente e spinge il footer in basso
-    )
-
-    # Footer
-    r_frecce = ft.Row( # righe per i pulsanti delle frecce destra e sinistra
-        [p_sinistra,input_sinistra,  input_destra, p_destra],
-        alignment=ft.MainAxisAlignment.CENTER,
-        spacing=50,
-    )
-    r_stop_reset = ft.Row( # righe per i pulsanti di stop e reset
-        [p_stop, p_reset],
-        alignment=ft.MainAxisAlignment.CENTER, 
-        spacing=50,
-    )
-    footer = ft.Container( 
-        ft.Column(
-            [r_frecce, r_stop_reset],
-            alignment=ft.MainAxisAlignment.CENTER, #centro il contenuto della colonna orizzontalmente
-            spacing=50, # so uno spazio di 50px tra le righe
-        ),
-        alignment=ft.alignment.center,
-        expand=False,
-    )
-
-    def show_list (e):
-        log_list.visible = not log_list.visible
-        page.update()
-
-    switch_show = ft.Switch(
-        thumb_icon=ft.Icons.LIST_OUTLINED,
-        value=True,
-        label="Log",
-        label_position=ft.LabelPosition.RIGHT,
-        on_change=show_list,
-    )
-
-
-    # Layout principale
-    layout = ft.Column(
-        [navbar, centro, footer],
-        alignment=ft.MainAxisAlignment.START, # allinea gli elementi in colonna dall'inizio in verticale
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
-        expand=True,  #  importantissimo: riempie tutta la finestra
-    )
-    
-    log_list = ft.Column(
-        scroll=ft.ScrollMode.AUTO,
-        spacing=5,
-    )
-
-    
-    page.theme = ft.Theme(
-        scrollbar_theme=ft.ScrollbarTheme(
-            thickness=4,
-            track_color="#111111",
-            thumb_color="#444444",
+    # ── Input fields ──────────────────────────────────────────────────────
+    def _input(label, value):
+        return ft.TextField(
+            label=label,
+            value=str(value),
+            width=90,
+            height=48,
+            text_size=14,
+            color=p.TEXT_PRI,
+            label_style=ft.TextStyle(color=p.TEXT_DIM, size=11),
+            border_color=p.BORDER,
+            focused_border_color=p.ACCENT,
+            bgcolor=p.SURFACE2,
+            border_radius=6,
+            text_align=ft.TextAlign.CENTER,
         )
-    )
-    
-    roba_log = ft.Column( #scusa menghi per il nome
-        [switch_show, bLog, bClear],
-        spacing=10,
-    )
-    
-    log_layout = ft.Row(
-        [log_list, roba_log],  # usa log_container invece di log_list
-        expand=False,
-        width=200,
-        vertical_alignment=ft.CrossAxisAlignment.START,
-    )
-    
 
+    input_destra   = _input("Step destra",   config.c_cupola)
+    input_sinistra = _input("Step sinistra", config.c_telescopio)
+
+    # ── Buttons ───────────────────────────────────────────────────────────
+    def _ctrl_btn(icon, label, color, on_click, width=110):
+        return ft.Container(
+            content=ft.Row(
+                [
+                    ft.Icon(icon, color=color, size=16),
+                    ft.Text(label, color=color, size=13, weight=ft.FontWeight.W_500),
+                ],
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            bgcolor=ft.Colors.with_opacity(0.08, color),
+            border=ft.border.all(1, ft.Colors.with_opacity(0.3, color)),
+            border_radius=8,
+            padding=ft.padding.symmetric(horizontal=14, vertical=10),
+            width=width,
+            on_click=on_click,
+            on_hover=lambda e, c=color: _btn_hover(e, c),
+        )
+
+    def _btn_hover(e, color):
+        e.control.bgcolor = ft.Colors.with_opacity(
+            0.18 if e.data == "true" else 0.08, color
+        )
+        page.update()
+
+    btn_left  = _ctrl_btn(ft.Icons.CHEVRON_LEFT,  "Sinistra", p.ACCENT,  lambda e: sposta_sinistra(int(input_sinistra.value or 0)))
+    btn_right = _ctrl_btn(ft.Icons.CHEVRON_RIGHT, "Destra",   p.ACCENT,  lambda e: sposta_destra(int(input_destra.value or 0)))
+    btn_stop  = _ctrl_btn(ft.Icons.STOP_CIRCLE,   "Stop",     p.DANGER,  lambda e: config.stop_movimento(), width=90)
+    btn_reset = _ctrl_btn(ft.Icons.REFRESH,       "Reset",    p.WARNING, lambda e: reset_posizioni(), width=90)
+
+    btn_set = ft.IconButton(
+        icon=ft.Icons.TUNE,
+        icon_color=p.TEXT_SEC,
+        icon_size=22,
+        tooltip="Impostazioni",
+        on_click=lambda e: router.go("settings", page),
+    )
     
-    layout = ft.Row(
-            [log_layout,layout],
-            expand=True,
-            vertical_alignment=ft.CrossAxisAlignment.START,)
+    btn_log = ft.IconButton(
+        icon=ft.Icons.TUNE,
+        icon_color=p.TEXT_SEC,
+        icon_size=22,
+        tooltip="log",
+        on_click=lambda e: router.go("log", page),
+    )
+
+    # ── Log panel ─────────────────────────────────────────────────────────
+    def toggle_log(e):
+        log_panel.visible = not log_panel.visible
+        page.update()
+
+    log_toggle_btn = ft.IconButton(
+        icon=ft.Icons.RECEIPT_LONG,
+        icon_color=p.ACCENT,
+        icon_size=18,
+        tooltip="Mostra/nascondi log",
+        on_click=toggle_log,
+    )
+    clear_btn = ft.IconButton(
+        icon=ft.Icons.DELETE_SWEEP_OUTLINED,
+        icon_color=p.TEXT_DIM,
+        icon_size=18,
+        tooltip="Pulisci log",
+        on_click=lambda e: clear_log(),
+    )
+
+    log_panel = _card(
+        ft.Column(
+            [
+                ft.Row(
+                    [
+                        _label("Event Log", p),
+                        ft.Row([log_toggle_btn, clear_btn], spacing=0),
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+                _divider(p),
+                ft.Container(content=log_list, height=260),
+            ],
+            spacing=0,
+        ),
+        p,
+        padding=14,
+        width=280,
+    )
+
+    # ── Coordinate cards ──────────────────────────────────────────────────
+    def _coord_card(label, value_widget, color):
+        return _card(
+            ft.Column(
+                [
+                    _label(label, p),
+                    ft.Container(height=4),
+                    ft.Row(
+                        [
+                            ft.Container(width=3, height=32, bgcolor=color, border_radius=2),
+                            ft.Container(width=8),
+                            value_widget,
+                        ],
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                    ),
+                ],
+                spacing=0,
+            ),
+            p,
+            padding=16,
+            width=180,
+        )
+
+    card_cupola     = _coord_card("Cupola",     val_cupola,     p.ACCENT2)
+    card_telescopio = _coord_card("Telescopio", val_telescopio, p.SUCCESS)
+
+    # ── Movement panel ────────────────────────────────────────────────────
+    movement_panel = _card(
+        ft.Column(
+            [
+                _label("Controllo Movimento", p),
+                _divider(p),
+                ft.Row(
+                    [btn_left, input_sinistra, input_destra, btn_right],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=10,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+                ft.Container(height=10),
+                ft.Row(
+                    [btn_stop, btn_reset],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=12,
+                ),
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=6,
+        ),
+        p,
+        padding=20,
+    )
+
+    s_attivo = settings.seriale.inAscolto
+    t_attivo = ft.Text(
+        "Sistema attivo" if s_attivo else "Sistema inattivo",
+        size=12,
+        color=p.SUCCESS if s_attivo else p.DANGER,
+    )
+    
+    # ── Top bar ───────────────────────────────────────────────────────────
+    status_dot = ft.Container(
+        width=8, height=8, bgcolor=p.SUCCESS, border_radius=4,
+        animate=ft.Animation(1200, ft.AnimationCurve.EASE_IN_OUT),
+    )
+
+    topbar = ft.Container(
+        content=ft.Row(
+            [
+                ft.Row(
+                    [
+                        ft.Text("OBSERVATORY", size=14, color=p.TEXT_PRI,
+                                weight=ft.FontWeight.W_600),
+                        ft.Text("CONTROL", size=14, color=p.ACCENT,
+                                weight=ft.FontWeight.W_300),
+                    ],
+                    spacing=10,
+                ),
+                ft.Row(
+                    [
+                        status_dot,
+                        t_attivo,
+                        ft.Container(width=12),
+                        btn_log,
+                        log_toggle_btn,
+                        clear_btn,
+                        btn_set,
+                    ],
+                    spacing=4,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        ),
+        bgcolor=ft.Colors.with_opacity(0.85, p.SURFACE),
+        border=ft.border.only(bottom=ft.border.BorderSide(1, p.BORDER)),
+        padding=ft.padding.symmetric(horizontal=24, vertical=12),
+        height=56,
+    )
+
+    # ── Crosshair decorativo ──────────────────────────────────────────────
+    crosshair = ft.Stack(
+        [
+            ft.Container(
+                width=160, height=160,
+                border=ft.border.all(1, ft.Colors.with_opacity(0.15, p.ACCENT2)),
+                border_radius=80,
+            ),
+            ft.Container(
+                width=80, height=80,
+                border=ft.border.all(1, ft.Colors.with_opacity(0.25, p.ACCENT2)),
+                border_radius=40,
+            ),
+            ft.Container(width=10, height=10, bgcolor=p.ACCENT2, border_radius=5),
+        ],
+        alignment=ft.alignment.center,
+        width=160,
+        height=160,
+    )
+
+    # ── Center area ───────────────────────────────────────────────────────
+    center_area = ft.Container(
+        content=ft.Column(
+            [
+                ft.Row(
+                    [card_cupola, card_telescopio],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=16,
+                ),
+                ft.Container(height=30),
+                ft.Row([crosshair], alignment=ft.MainAxisAlignment.CENTER),
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        ),
+        expand=True,
+        alignment=ft.alignment.top_center,
+        padding=ft.padding.only(top=30),
+    )
+
+    # ── Bottom strip ──────────────────────────────────────────────────────
+    bottom_strip = ft.Container(
+        content=movement_panel,
+        padding=ft.padding.symmetric(horizontal=24, vertical=16),
+        bgcolor=ft.Colors.with_opacity(0.70, p.BG),
+        border=ft.border.only(top=ft.border.BorderSide(1, p.BORDER)),
+    )
+
+    sidebar = ft.Container(
+        content=log_panel,
+        padding=ft.padding.only(top=16, right=16, bottom=16),
+    )
+
+    main_row = ft.Row(
+        [
+            ft.Container(content=center_area, expand=True),
+            sidebar,
+        ],
+        expand=True,
+        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
+    )
+
+    layout = ft.Column(
+        [topbar, main_row, bottom_strip],
+        expand=True,
+        spacing=0,
+    )
+
+    # ── Video background ──────────────────────────────────────────────────
     video_bg = Video(
-        
         playlist=[VideoMedia("src/assets/Composizione1.mp4")],
         autoplay=True,
         muted=True,
         expand=True,
-        fit="COVER"
+        fit="COVER",
+    )
+
+    overlay = ft.Container(
+        expand=True,
+        bgcolor=ft.Colors.with_opacity(0.72, p.BG),
     )
 
     pagina = ft.Stack(
-            [
-                video_bg,
-                ft.Container(
-                    content=layout,
-                    alignment=ft.alignment.center,
-                    expand=True
-                )
-            ],
-            expand=True,
-            fit="COVER"
-        )
-    return pagina
+        [
+            video_bg,
+            overlay,
+            ft.Container(content=layout, expand=True),
+        ],
+        expand=True,
+        fit="COVER",
+    )
 
+    return pagina   

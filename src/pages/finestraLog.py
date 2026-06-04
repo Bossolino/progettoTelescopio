@@ -1,10 +1,11 @@
 import flet as ft
 from pathlib import Path
 from settings import settings
+from pages import router
 
 def finestraLog(page: ft.Page):
     #impostazioni pagina
-    page.title = "HOME"
+    page.title = "log"
     page.padding = 30
     page.spacing = 20
     page.theme_mode = settings.page.theme
@@ -13,6 +14,7 @@ def finestraLog(page: ft.Page):
 
     isClear = True #per abilitare il pulsante clear che tanto se abilita lo stesso
 
+    btn_home = ft.ElevatedButton(icon=ft.Icons.ARROW_LEFT, text="HOME", on_click= lambda e: router.go("home", page))
 
 
     # nomiFile = ["giorno 1", "froci", "pezzi di merda", "src/fileLog/spostamenti.log"] # vanno passati i nomi dei file
@@ -33,7 +35,7 @@ def finestraLog(page: ft.Page):
 
     
     # contenuto del file
-    contenuto = ft.ListView(spacing=20, padding=20, auto_scroll=True, height=300, expand=True)
+    contenuto = ft.ListView(spacing=10, padding=10, auto_scroll=True, expand=True)
     # funzione per eliminare cio che si vede a nel contenuto
     def clear():
         nonlocal isClear
@@ -67,6 +69,7 @@ def finestraLog(page: ft.Page):
             righe = f.readlines() 
             for riga in righe:
                 new_riga(riga)
+                print(riga)
             if contenuto.controls != None:
                 isClear = True
             pulsante_clear.disabled = not isClear
@@ -75,6 +78,7 @@ def finestraLog(page: ft.Page):
 
     def selezione(e): # quando viene selezionata un opzione
         print("Selezionato:", e.control.value)
+        clear()
         carica_contenuto(e.control.value)
         page.update()
 
@@ -89,12 +93,34 @@ def finestraLog(page: ft.Page):
         on_change=selezione,
     )
 
-    layout = ft.Column(
-        [select, contenuto],
-        alignment=ft.MainAxisAlignment.CENTER, # allinea gli elementi in colonna dall'inizio in verticale
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER, # allinea gli elementi in colonna al centro orizzontalmente
-
+    header = ft.Row(
+        [
+            btn_home,
+            pulsante_clear
+        ],
+        alignment=ft.MainAxisAlignment.SPACE_BETWEEN
     )
 
-    page.add(layout, pulsante_clear)
+    body = ft.Container(
+        content=ft.Column(
+            [
+                select,
+                contenuto
+            ],
+            expand=True
+        ),
+        expand=True
+    )
+
+    layout = ft.Column(
+        [
+            header,
+            body
+        ],
+        expand=True
+    )
+
+
+    # page.add(layout)
     page.update()
+    return layout
